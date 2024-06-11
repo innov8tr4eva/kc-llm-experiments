@@ -25,6 +25,7 @@ def get_graphql_data(url, query, token):
 url = "https://api.ros.rbx.com/graphql"
 query = getEmpDataFromROS()
 token = os.environ.get("ROS_API_TOKEN")
+print("token:", token)
 
 
 result = get_graphql_data(url, query, token)
