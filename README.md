@@ -18,4 +18,12 @@ streamlit run app.py
 
 4. A new window should open up with a pygwalker interface for exploring employee data
 
-![alt text](image.png)
+![pygwalker visualize](pyg-visualize.png)
+
+5. You can use the data tab to get an overview of all fields in the results
+
+![pygwalker data](pyg-data.png)
+
+6. You can also chat with your data in the chat tab after you setup an account in Kanaries
+
+![pygwalker chat](pyg-chat.png)
