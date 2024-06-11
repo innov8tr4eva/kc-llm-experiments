@@ -3,7 +3,10 @@ import pandas as pd
 from pygwalker.api.streamlit import StreamlitRenderer
 import streamlit as st
 import os
+from dotenv import load_dotenv
 from queries.employee_queries import getEmpDataFromROS
+
+load_dotenv()
 
 
 def get_graphql_data(url, query, token):
@@ -25,8 +28,6 @@ def get_graphql_data(url, query, token):
 url = "https://api.ros.rbx.com/graphql"
 query = getEmpDataFromROS()
 token = os.environ.get("ROS_API_TOKEN")
-print("token:", token)
-
 
 result = get_graphql_data(url, query, token)
 result_df = pd.DataFrame(result)
