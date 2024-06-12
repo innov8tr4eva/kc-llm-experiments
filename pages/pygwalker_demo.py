@@ -4,9 +4,9 @@ from pygwalker.api.streamlit import StreamlitRenderer
 import streamlit as st
 import os
 from dotenv import load_dotenv
-from queries.employee_queries import getEmpDataFromROS
 
 load_dotenv()
+from queries.employee_queries import getEmpDataFromROS
 
 
 def get_graphql_data(url, query, token):
@@ -25,7 +25,7 @@ def get_graphql_data(url, query, token):
     return response.json()["data"]["employees"]["nodes"]
 
 
-url = "https://api.ros.rbx.com/graphql"
+url = os.environ.get("ROS_API_URL")
 query = getEmpDataFromROS()
 token = os.environ.get("ROS_API_TOKEN")
 
@@ -36,8 +36,8 @@ result_df = pd.DataFrame(result)
 
 st.set_page_config(page_title="Explore Roblox Employee Data", layout="wide")
 
-# Add Title
-st.title("Explore Roblox Employee Data")
+# Add header
+st.header("Explore Roblox Employee Data", divider="rainbow")
 
 
 # You should cache your pygwalker renderer, if you don't want your memory to explode
