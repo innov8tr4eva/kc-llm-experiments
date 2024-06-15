@@ -69,6 +69,33 @@ def queryEmpDataFromROS():
     return query
 
 
+def queryMinEmpDataFromROS():
+    query = (
+        query
+    ) = """
+    query {
+        employees {
+            nodes {
+                email
+                firstName
+                lastName
+                avatarUrl
+                slackAvatarUrl
+                title
+                group
+                team
+                pod
+                hireDate
+                type
+                status
+                remoteStatus
+            }
+        }
+    }
+"""
+    return query
+
+
 def get_emp_graphql_data(url, query, token):
     headers = {
         "Content-Type": "application/json",

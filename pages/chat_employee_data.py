@@ -1,15 +1,49 @@
 import streamlit as st
-from openai import OpenAI
+import pandas as pd
+
+# from openai import OpenAI
+import pandasai as pai
+from pandasai import SmartDataframe
+from pandasai.llm import OpenAI
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+from queries.employee_queries import queryEmpDataFromROS, queryMinEmpDataFromROS
+from queries.employee_queries import get_emp_graphql_data
+
+# clear the cache
+pai.clear_cache()
+
+url = os.environ.get("ROS_API_URL")
+query = queryMinEmpDataFromROS()
+token = os.environ.get("ROS_API_TOKEN")
+
+result = get_emp_graphql_data(url, query, token)
+result_df = pd.DataFrame(result)
+
 
 st.header("Natural queries with employee data", divider="rainbow")
 
 gateway_base_url = "http://apis.sitetest3.simulpong.com/ml-gateway-service/v1/"
-client = OpenAI(api_key=st.secrets["ROS_ML_GATEWAY_KEY"], base_url=gateway_base_url)
 
-# client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-# set default model
-if "openai_model" not in st.session_state:
-    st.session_state.openai_model = "meta-llama/Meta-Llama-3-70B-Instruct"
+
+llm = OpenAI(
+    api_token=st.secrets["OPENAI_API_KEY"],
+    model="gpt-4o",
+    # api_token=st.secrets["ROS_ML_GATEWAY_KEY"],
+    # base_url=gateway_base_url,
+    temperature=0,
+    seed=26,
+)
+
+
+# creating a SmartDataframe object
+smart_result_df = SmartDataframe(result_df, config={"llm": llm})
+
+# displaying the results dataframe
+st.dataframe(result_df)
+
 
 # intialize the chatbot
 if "messages" not in st.session_state:
@@ -21,20 +55,12 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # React to user input
-if prompt := st.chat_input("How can I help you today?"):
+if prompt := st.chat_input("What would you like to know about employee data?"):
     with st.chat_message("user"):
         st.markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
     # assistant response
     with st.chat_message("assistant"):
-        stream = client.chat.completions.create(
-            model=st.session_state.openai_model,
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
-        )
-        # print(stream)
-        response = st.write_stream(stream)
+        response = smart_result_df.chat(prompt)
+        st.write(response)
         st.session_state.messages.append({"role": "assistant", "content": response})
