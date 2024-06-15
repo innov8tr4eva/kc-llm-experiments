@@ -6,30 +6,15 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-from queries.employee_queries import getEmpDataFromROS
-
-
-def get_graphql_data(url, query, token):
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {token}",
-    }
-
-    data = {
-        "query": query,
-    }
-
-    response = requests.post(url, headers=headers, json=data)
-    response.raise_for_status()
-
-    return response.json()["data"]["employees"]["nodes"]
+from queries.employee_queries import queryEmpDataFromROS
+from queries.employee_queries import get_emp_graphql_data
 
 
 url = os.environ.get("ROS_API_URL")
-query = getEmpDataFromROS()
+query = queryEmpDataFromROS()
 token = os.environ.get("ROS_API_TOKEN")
 
-result = get_graphql_data(url, query, token)
+result = get_emp_graphql_data(url, query, token)
 result_df = pd.DataFrame(result)
 
 ## Rendering the frontend
@@ -51,3 +36,11 @@ def get_pyg_renderer() -> "StreamlitRenderer":
 renderer = get_pyg_renderer()
 
 renderer.explorer()
+
+
+# @st.cache_data
+# def render_dataframe(dataframe):
+#     return st.dataframe(dataframe)
+
+
+# render_dataframe(result_df)

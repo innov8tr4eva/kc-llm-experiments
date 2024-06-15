@@ -7,7 +7,8 @@ Demo repo for the capabilities of pygwalker
 ```
 pip install pygwalker streamlit openai
 ```
-* openai above is optional. You can use a local LLM or ML gateway at Roblox
+
+- openai above is optional. You can use a local LLM or ML gateway at Roblox
 
 2. Copy .env.local to .env and set your ROS API key there
 
@@ -30,3 +31,11 @@ streamlit run main.py
 7. You can also chat with your data in the chat tab after you setup an account in Kanaries
 
 ![pygwalker chat](pyg-chat.png)
+
+### To chat with dataframes
+
+We are using [PandasAI](https://github.com/Sinaptik-AI/pandas-ai) to chat with dataframes. For this you need to install the library
+
+```
+pip install pandasai
+```

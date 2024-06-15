@@ -9,7 +9,7 @@ client = OpenAI(api_key=st.secrets["ROS_ML_GATEWAY_KEY"], base_url=gateway_base_
 # client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 # set default model
 if "openai_model" not in st.session_state:
-    st.session_state.openai_model = "openai/gpt-4-turbo"
+    st.session_state.openai_model = "meta-llama/Meta-Llama-3-70B-Instruct"
 
 # intialize the chatbot
 if "messages" not in st.session_state:
