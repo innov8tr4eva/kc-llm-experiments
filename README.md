@@ -5,8 +5,9 @@ Demo repo for the capabilities of pygwalker
 1.  Install the following packages
 
 ```
-pip install pygwalker streamlit
+pip install pygwalker streamlit openai
 ```
+* openai above is optional. You can use a local LLM or ML gateway at Roblox
 
 2. Copy .env.local to .env and set your ROS API key there
 
