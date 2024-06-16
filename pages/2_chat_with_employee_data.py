@@ -1,19 +1,14 @@
 import streamlit as st
 import pandas as pd
-
-# from openai import OpenAI
-import pandasai as pai
 from pandasai import SmartDataframe
 from pandasai.llm import OpenAI
+from pandasai.responses.streamlit_response import StreamlitResponse
 import os
 from dotenv import load_dotenv
-
-load_dotenv()
 from queries.employee_queries import queryEmpDataFromROS, queryMinEmpDataFromROS
 from queries.employee_queries import get_emp_graphql_data
 
-# clear the cache
-pai.clear_cache()
+load_dotenv()
 
 url = os.environ.get("ROS_API_URL")
 query = queryMinEmpDataFromROS()
@@ -44,7 +39,6 @@ smart_result_df = SmartDataframe(result_df, config={"llm": llm})
 # displaying the results dataframe
 st.dataframe(result_df)
 
-
 # intialize the chatbot
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -58,9 +52,14 @@ for message in st.session_state.messages:
 if prompt := st.chat_input("What would you like to know about employee data?"):
     with st.chat_message("user"):
         st.markdown(prompt)
-    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.session_state.messages.append(
+        {"role": "user", "content": prompt, "verbose": True}
+    )
     # assistant response
     with st.chat_message("assistant"):
         response = smart_result_df.chat(prompt)
-        st.write(response)
+        if "png" in str(response):
+            st.image(response)
+        else:
+            st.write(response)
         st.session_state.messages.append({"role": "assistant", "content": response})

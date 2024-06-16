@@ -14,6 +14,4 @@ st.write(
 st.write("Choose an example from the sidebar.")
 st.divider()
 st.write("1. The first example is to explore Roblox employee data using pygwalker.")
-st.write(
-    "2. The second example is to use llamaindex to interact with employee data using a chat interface."
-)
+st.write("2. The second example is to use pandasai to chat with Roblox employee data.")
