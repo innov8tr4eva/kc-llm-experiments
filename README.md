@@ -40,6 +40,12 @@ We are using [PandasAI](https://github.com/Sinaptik-AI/pandas-ai) to chat with d
 pip install pandasai
 ```
 
+### To chat with datalake
+
+```
+pip install llama_index llama_hub llama-index-agent-openai
+```
+
 #### Planned enhancements
 
 1. Add an agentic workflow to make the chart smarter and call the pandasai as an option if it feels it is needed vs. always calling it
