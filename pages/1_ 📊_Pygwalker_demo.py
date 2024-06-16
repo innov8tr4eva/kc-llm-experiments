@@ -1,18 +1,13 @@
-import requests
 import pandas as pd
 from pygwalker.api.streamlit import StreamlitRenderer
 import streamlit as st
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
 from queries.employee_queries import queryEmpDataFromROS
 from queries.employee_queries import get_emp_graphql_data
 
 
-url = os.environ.get("ROS_API_URL")
+url = st.secrets["ROS_API_URL"]
 query = queryEmpDataFromROS()
-token = os.environ.get("ROS_API_TOKEN")
+token = st.secrets["ROS_API_TOKEN"]
 
 result = get_emp_graphql_data(url, query, token)
 result_df = pd.DataFrame(result)
@@ -36,11 +31,3 @@ def get_pyg_renderer() -> "StreamlitRenderer":
 renderer = get_pyg_renderer()
 
 renderer.explorer()
-
-
-# @st.cache_data
-# def render_dataframe(dataframe):
-#     return st.dataframe(dataframe)
-
-
-# render_dataframe(result_df)

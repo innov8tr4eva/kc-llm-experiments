@@ -10,7 +10,7 @@ pip install pygwalker streamlit openai
 
 - openai above is optional. You can use a local LLM or ML gateway at Roblox
 
-2. Copy .env.local to .env and set your ROS API key there
+2. Copy .streamlit/secrets.toml.local to.streamlit/secrets.toml and enter your keys there.
 
 3. Run the following command
 
@@ -39,3 +39,9 @@ We are using [PandasAI](https://github.com/Sinaptik-AI/pandas-ai) to chat with d
 ```
 pip install pandasai
 ```
+
+#### Planned enhancements
+
+1. Add an agentic workflow to make the chart smarter and call the pandasai as an option if it feels it is needed vs. always calling it
+2. Add a page that will take any csv and let you chat with it
+3. Add a page that lets you analyze all files in RDL

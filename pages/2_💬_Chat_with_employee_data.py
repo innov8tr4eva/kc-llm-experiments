@@ -3,16 +3,13 @@ import pandas as pd
 from pandasai import SmartDataframe
 from pandasai.llm import OpenAI
 from pandasai.responses.streamlit_response import StreamlitResponse
-import os
-from dotenv import load_dotenv
 from queries.employee_queries import queryEmpDataFromROS, queryMinEmpDataFromROS
 from queries.employee_queries import get_emp_graphql_data
 
-load_dotenv()
 
-url = os.environ.get("ROS_API_URL")
+url = st.secrets["ROS_API_URL"]
 query = queryMinEmpDataFromROS()
-token = os.environ.get("ROS_API_TOKEN")
+token = st.secrets["ROS_API_TOKEN"]
 
 result = get_emp_graphql_data(url, query, token)
 result_df = pd.DataFrame(result)
