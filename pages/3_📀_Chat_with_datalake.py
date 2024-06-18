@@ -4,7 +4,7 @@ import pandas as pd
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 from llama_index.agent.openai import OpenAIAgent
-from llama_hub.tools.database.base import DatabaseToolSpec
+from llama_index.tools.database import DatabaseToolSpec
 
 
 db_spec = DatabaseToolSpec(
@@ -24,6 +24,8 @@ for tool in tools:
     st.write(tool.metadata.fn_schema)
 
 st.header("Natural queries with datalake", divider="rainbow")
+
+st.header("this is not working yet")
 
 gateway_base_url = "http://apis.sitetest3.simulpong.com/ml-gateway-service/v1/"
 
