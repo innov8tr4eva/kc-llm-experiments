@@ -43,7 +43,7 @@ pip install pandasai
 ### To chat with datalake
 
 ```
-pip install llama_index llama_hub llama-index-agent-openai
+pip install llama_index llama-index-agent-openai llama-index-tools-database psycopg2-binary
 ```
 
 #### Planned enhancements
